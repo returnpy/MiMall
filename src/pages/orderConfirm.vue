@@ -1,6 +1,6 @@
 <template>
   <div>
-    Detail
+    OrderConfirm
   </div>
 </template>
 

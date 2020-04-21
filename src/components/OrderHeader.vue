@@ -1,6 +1,6 @@
 <template>
   <div>
-    Detail
+    OrderHeader
   </div>
 </template>
 
