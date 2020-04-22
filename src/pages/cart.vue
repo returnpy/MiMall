@@ -1,7 +1,7 @@
 <template>
   <div>
     <order-header></order-header>
-    Cart
+    Cart---------
     <nav-footer></nav-footer>
   </div>
 </template>

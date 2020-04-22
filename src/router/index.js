@@ -5,6 +5,7 @@ import Cart from '../pages/cart.vue'
 import Detail from '../pages/detail.vue'
 import Home from '../pages/home.vue'
 import Index from '../pages/index.vue'
+import Login from '../pages/login.vue'
 import Order from '../pages/order.vue'
 import OrderConfirm from '../pages/orderConfirm.vue'
 import OrderList from '../pages/orderList.vue'
@@ -40,6 +41,11 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: Cart
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   },
   {
     path: '/order',
