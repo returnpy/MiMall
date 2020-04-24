@@ -1,8 +1,11 @@
 import axios from 'axios'
 import Vue from 'vue'
 import VueAxios from 'vue-axios'
+import VueCookie from 'vue-cookie'
+import VueLazyLoad from 'vue-lazyload'
 import App from './App.vue'
 import router from './router'
+import store from './store'
 // import env from './env'
 
 const mock = false;
@@ -16,20 +19,28 @@ axios.defaults.timeout = 5000
 
 axios.interceptors.response.use(function (response) {
   let res = response.data
+  let path = location.hash;
   
   if (res.status === 0) {
     return res.data
   } else if (res.status === 10) {
-    window.location.href = '/#/login'
+    if (path !== '#/index') {
+      window.location.href = '/#/login'
+    }
   } else {
-    console.log('拦截器');
+    return Promise.reject(res)
   }
 })
 
 Vue.use(VueAxios, axios)
+Vue.use(VueCookie)
+Vue.use(VueLazyLoad, {
+  loading: '/imgs/loading-svg/loading-bars.svg'
+})
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

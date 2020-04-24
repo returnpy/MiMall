@@ -13,7 +13,7 @@
           <a href="#" v-if="!username" @click.prevent="login">登陆</a>
           <a href="#" v-if="username">我的订单</a>
           <a href="#" class="my-cart" @click.prevent="goToCart"
-            ><span class="icon-cart"></span>购物车</a
+            ><span class="icon-cart"></span>购物车({{ cartCount }})</a
           >
         </div>
       </div>
@@ -129,10 +129,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      username: '',
       phoneList: [],
     }
   },
@@ -162,6 +162,9 @@ export default {
       this.$router.push('/cart')
     }
   },
+  computed: {
+    ...mapState(['username', 'cartCount']),
+  },
 }
 </script>
 
@@ -184,6 +187,7 @@ export default {
         margin-right: 17px;
       }
       .my-cart {
+        margin-right: 0;
         width: 110px;
         background-color: #f60;
         text-align: center;
@@ -248,6 +252,8 @@ export default {
             .children {
               height: 220px;
               opacity: 1;
+              z-index: 99;
+              transition: all 0.5s;
             }
           }
           .children {
@@ -262,6 +268,7 @@ export default {
             opacity: 0;
             overflow: hidden;
             transition: all 0.5s;
+            z-index: 99;
             .product {
               position: relative;
               &:before {
