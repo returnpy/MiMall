@@ -43,6 +43,7 @@ export default {
 @import '../assets/scss/mixin.scss';
 
 .nav-bar {
+  z-index: 10;
   height: 70px;
   line-height: 70px;
   border-bottom: 1px solid #e5e5e5;

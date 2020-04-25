@@ -216,13 +216,14 @@ export default {
     goToCart () {
       this.$router.push('/cart')
     },
-    async addCart () {
-      // const res = await this.axios.post('/carts', {
-      //   productId,
-      //   selected: true
-      // })
-      // console.log(res);
+    async addCart (id) {
+      const res = await this.axios.post('/carts', {
+        productId: id,
+        selected: true
+      })
       this.showModal = true
+      this.$store.dispatch('saveCartCount', res || res.cartTotalQuantity || 0)
+      // console.log(res);
 
     },
     async init () {

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Message } from 'element-ui'
 import Vue from 'vue'
 import VueAxios from 'vue-axios'
 import VueCookie from 'vue-cookie'
@@ -7,6 +8,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 // import env from './env'
+
+Vue.prototype.$message = Message
 
 const mock = false;
 if (mock) {
@@ -27,7 +30,9 @@ axios.interceptors.response.use(function (response) {
     if (path !== '#/index') {
       window.location.href = '/#/login'
     }
+    return Promise.reject(res)
   } else {
+    Message.warning(res.msg)
     return Promise.reject(res)
   }
 })

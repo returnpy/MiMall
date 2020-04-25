@@ -3,6 +3,7 @@ export default {
     context.commit('saveUserName', username)
   },
   saveCartCount (context, count) {
+    console.log(count);
     context.commit('saveCartCount', count)
   }
 }

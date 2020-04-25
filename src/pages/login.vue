@@ -70,10 +70,15 @@ export default {
         username,
         password
       })
-      this.$cookie.set('userid', res.id, { expires: '1M' })
+      this.$cookie.set('userid', res.id, { expires: 'Session' })
       // this.$store.dispatch('saveUserName', res.username)
       this.saveUserName(res.username)
-      this.$router.push('/index')
+      this.$router.push({
+        name: 'index',
+        params: {
+          from: 'login'
+        }
+      })
     },
     async register () {
       await this.axios.post('/user/register', {

@@ -11,6 +11,7 @@
         <div class="topbar-user">
           <a href="#" v-if="username">{{ username }}</a>
           <a href="#" v-if="!username" @click.prevent="login">登陆</a>
+          <a href="#" v-if="username" @click.prevent="logout">退出</a>
           <a href="#" v-if="username">我的订单</a>
           <a href="#" class="my-cart" @click.prevent="goToCart"
             ><span class="icon-cart"></span>购物车({{ cartCount }})</a
@@ -144,10 +145,27 @@ export default {
   },
   mounted () {
     this.getProductList()
+    let params = this.$route.params
+    if (params && params.from === 'login') {
+      this.getCartCount()
+    }
   },
   methods: {
     login () {
       this.$router.push('/login')
+    },
+    async getCartCount () {
+      const res = await this.axios.get('/carts/products/sum') || {}
+      console.log(res, '11');
+
+      this.$store.dispatch('saveCartCount', res)
+    },
+    async logout () {
+      await this.axios.post('/user/logout')
+      this.$message.success('退出成功!')
+      this.$cookie.set('userId', '', { expires: '-1' })
+      this.$store.dispatch('saveUserName', '')
+      this.$store.dispatch('saveCartCount', '0')
     },
     async getProductList () {
       const data = await this.axios.get('/products', {
@@ -209,30 +227,6 @@ export default {
       position: relative;
       height: 112px;
       @include flex();
-      .header-logo {
-        display: inline-block;
-        width: 55px;
-        height: 55px;
-        background-color: #f60;
-        a {
-          display: inline-block;
-          width: 110px;
-          &:before {
-            content: '';
-            @include bgImg(55px, 55px, '/imgs/mi-logo.png', 55px);
-            transition: margin 0.2s;
-          }
-          &:after {
-            content: '';
-            display: inline-block;
-            @include bgImg(55px, 55px, '/imgs/mi-home.png', 55px);
-          }
-          &:hover:before {
-            margin-left: -55px;
-            transition: margin 0.2s;
-          }
-        }
-      }
       .header-menu {
         display: inline-block;
         padding-left: 209px;
